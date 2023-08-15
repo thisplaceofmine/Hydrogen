@@ -1,4 +1,4 @@
-import typeOf from './typeOf';
+import typeOf from './typeof';
  
 const checkKeyValidity = (key: any): string | never => {
   let newKey = '';

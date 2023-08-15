@@ -1,4 +1,6 @@
-function typeOf(value) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeOf = (value) => {
     return Object.prototype.toString.call(value).slice(8, -1).toLowerCase();
-}
-module.exports = typeOf;
+};
+exports.default = typeOf;

@@ -1,3 +1,9 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const typeof_1 = __importDefault(require("./typeof"));
 const checkKeyValidity = (key) => {
     let newKey = '';
     try {
@@ -12,12 +18,12 @@ function keyMap(object, callback = (a) => a, config = {
     sameKey: 'replace',
     deep: false,
 }) {
-    console.log('object', object, typeOf(object));
-    if (typeOf(object) !== 'object') {
+    console.log('object', object, (0, typeof_1.default)(object));
+    if ((0, typeof_1.default)(object) !== 'object') {
         throw new Error('The first argument must be an object');
     }
     let output = {};
-    for (const entries in Object.entries(object)) {
+    for (const entries of Object.entries(object)) {
         const [key, value] = entries;
         let newKey = '';
         newKey = checkKeyValidity(callback(key));
@@ -37,7 +43,7 @@ function keyMap(object, callback = (a) => a, config = {
             default:
                 throw new Error('The sameKey option must be replace, throw or ignore');
         }
-        if (config.deep && typeOf(value) === 'object') {
+        if (config.deep && (0, typeof_1.default)(value) === 'object') {
             output[newKey] = keyMap(value, callback, config);
         }
     }

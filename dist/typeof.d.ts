@@ -1,1 +1,2 @@
-declare function typeOf(value: any): string;
+declare const typeOf: (value: any) => string;
+export default typeOf;
