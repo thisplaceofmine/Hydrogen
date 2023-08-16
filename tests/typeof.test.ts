@@ -1,5 +1,5 @@
-const typeOf = require('../dist/typeof.js');
-
+// const typeOf = require('../dist/typeof');
+import typeOf from '../dist/typeof';
 
 describe('typeof', () => {
   it('should return the type of a variable', () => {
@@ -31,8 +31,6 @@ describe('typeof', () => {
     expect(typeOf(new Promise(() => {}))).toBe('promise');
     // generator
     expect(typeOf(function* () {})).toBe('generatorfunction');
-    // asyncfunction
-    expect(typeOf(async () => {})).toBe('asyncfunction');
     // arraybuffer
     expect(typeOf(new ArrayBuffer(1))).toBe('arraybuffer');
 

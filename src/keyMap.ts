@@ -1,35 +1,25 @@
 import typeOf from './typeof';
  
-const checkKeyValidity = (key: any): string | never => {
-  let newKey = '';
-  try {
-    newKey = JSON.parse(newKey);
-  } catch (e) {
-    throw new Error('The callback function must return a string, number or valid JSON string');
-  }
-  return newKey;
-};
-
 type SameKey = 'replace' | 'throw' | 'ignore';
+type Key = string | number | symbol;
+type Config = {
+  sameKey?: SameKey;
+  deep?: boolean;
+}
 
 function keyMap(
   object: object,
-  callback = (a: any) => a,
-  config: { sameKey: SameKey; deep: boolean } = {
+  callback = (a: Key): Key => a,
+  config: Config = {
     sameKey: 'replace',
-    deep: false,
+    deep: true,
   }
 ): object|never {
-  console.log('object', object, typeOf(object));
-  if (typeOf(object) !== 'object') {
-    throw new Error('The first argument must be an object');
-  }
   let output: Object = {};
   for (const entries of Object.entries(object)) {
     const [key, value] = entries;
-
-    let newKey = '';
-    newKey = checkKeyValidity(callback(key));
+    let newKey;
+    newKey = callback(key);
 
     if (!(newKey in object)) {
       output[newKey] = value;
@@ -45,8 +35,6 @@ function keyMap(
         throw new Error('The callback function must return a unique key');
       case 'ignore':
         break;
-      default:
-        throw new Error('The sameKey option must be replace, throw or ignore');
     }
 
     if (config.deep && typeOf(value) === 'object') {
@@ -56,4 +44,4 @@ function keyMap(
   return output;
 }
 
-module.exports = keyMap;
+export default keyMap;

@@ -4,29 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeof_1 = __importDefault(require("./typeof"));
-const checkKeyValidity = (key) => {
-    let newKey = '';
-    try {
-        newKey = JSON.parse(newKey);
-    }
-    catch (e) {
-        throw new Error('The callback function must return a string, number or valid JSON string');
-    }
-    return newKey;
-};
 function keyMap(object, callback = (a) => a, config = {
     sameKey: 'replace',
     deep: false,
 }) {
-    console.log('object', object, (0, typeof_1.default)(object));
-    if ((0, typeof_1.default)(object) !== 'object') {
-        throw new Error('The first argument must be an object');
-    }
     let output = {};
     for (const entries of Object.entries(object)) {
         const [key, value] = entries;
         let newKey = '';
-        newKey = checkKeyValidity(callback(key));
+        console.log('newKey', callback(key));
+        newKey = callback(key);
         if (!(newKey in object)) {
             output[newKey] = value;
             delete object[key];
