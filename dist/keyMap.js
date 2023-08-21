@@ -6,13 +6,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeof_1 = __importDefault(require("./typeof"));
 function keyMap(object, callback = (a) => a, config = {
     sameKey: 'replace',
-    deep: false,
+    deep: true,
 }) {
     let output = {};
     for (const entries of Object.entries(object)) {
         const [key, value] = entries;
-        let newKey = '';
-        console.log('newKey', callback(key));
+        let newKey;
         newKey = callback(key);
         if (!(newKey in object)) {
             output[newKey] = value;
@@ -27,8 +26,6 @@ function keyMap(object, callback = (a) => a, config = {
                 throw new Error('The callback function must return a unique key');
             case 'ignore':
                 break;
-            default:
-                throw new Error('The sameKey option must be replace, throw or ignore');
         }
         if (config.deep && (0, typeof_1.default)(value) === 'object') {
             output[newKey] = keyMap(value, callback, config);
@@ -36,4 +33,4 @@ function keyMap(object, callback = (a) => a, config = {
     }
     return output;
 }
-module.exports = keyMap;
+exports.default = keyMap;
